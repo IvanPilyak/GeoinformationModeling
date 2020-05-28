@@ -1,0 +1,35 @@
+﻿@model List<GeoinformationModelingViewModel>
+@{
+    ViewData["Title"] = " All saved river params";
+    int iter = 1;
+}
+
+    <div class="title text-center">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+
+
+<div class="row rivers-block">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-12 col-lg-4 mb-4">
+            <div class="river-block">
+                <div class="row">
+                    <div class="col-auto">
+                        @item.RiverId
+                    </div>
+                    <div class="col">
+                        Name: <span class="river-name">@item.RiverName</span>
+                    </div>
+                    <div class="ml-auto col-auto">
+                        <a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="GeoinformationModelingCalculator" asp-route-riverId="@item.RiverId">Open</a>
+                        <a class="btn btn-danger" asp-area="" asp-controller="Home" asp-action="Calculate" asp-route-riverId="@item.RiverId">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+</div>
+

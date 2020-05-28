@@ -1,0 +1,191 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+
+label, .col-form-label {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.modal-lg {
+    max-width: 98% !important;
+}
+
+
+
+/*MAP*/
+.shadow {
+    background-color: #FFF;
+    box-shadow: 0 6px 3px -3px #888;
+    -moz-border-radius: 6px;
+    -moz-box-shadow: 0 6px 3px -3px #888;
+    -webkit-border-radius: 6px;
+    -webkit-box-shadow: 0 6px 3px -3px #888;
+    padding: 8px;
+}
+
+.togglebutton {
+    color: #000;
+    font-family: Helvetica, Calibri, Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    margin: 0;
+    padding: 5px;
+}
+
+    .togglebutton.mousedown {
+        background: url(images/buttonbg.jpg) repeat-x scroll left center transparent;
+    }
+
+.floatingWindow {
+    background: url(images/blue.png) repeat scroll left top transparent;
+    border: solid 1px #00628B;
+    color: #000;
+    font-family: Tahoma;
+    position: absolute;
+    text-align: left;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.title {
+    font-size: 10pt;
+    padding-left: 5px;
+}
+
+.details {
+    font-size: 8pt;
+    padding: 10px;
+}
+
+.disabled {
+    color: gray;
+}
+
+
+.text-white{
+    color: white !important;
+}
+
+.btn-sm {
+    font-size: 10px;
+    padding: 1px 5px;
+}
+
+#chartdiv {
+    width: 100%;
+    height: 500px;
+    max-width: 100%;
+}
+.carousel-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    color: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+
+.banner-btn {
+    position: absolute;
+    font-size: 30px;
+    z-index: 3;
+    top: 46%;
+    border: 3px solid;
+    border-radius: 0px;
+    left: calc(50% - 100px);
+}
+
+.river-block {
+    padding: 40px 30px;
+    border-radius: 8px;
+    border: 2px solid rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.01);
+}
+
+.title h1 {
+    font-size: 36px;
+    line-height: 42px;
+    font-weight: bold;
+    color: #203658;
+    margin: 50px 0;
+}
+
+.home-content{
+    margin-top: 80px;
+}
+
+    .home-content .description {
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 27px;
+        color: #203658;
+    }
+
+    .home-content .title {
+        font-weight: bold;
+        font-size: 35px;
+        line-height: 40px;
+        color: #203658;
+        margin: 20px 0 30px;
+    }

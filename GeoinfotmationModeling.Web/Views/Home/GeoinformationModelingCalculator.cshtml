@@ -1,0 +1,322 @@
+﻿@model GeoinformationModelingViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<GeoinformationModeling.DataAccess.Entities.ApplicationUser> SignInManager
+@inject UserManager<GeoinformationModeling.DataAccess.Entities.ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Geoinfotmation Modeling Calculator";
+}
+<div class="title text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<form asp-action="Calculate" asp-controller="Home" id="mainForm"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-update="#ajaxresult"
+      data-ajax-success="resultMatrixes">
+
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <div class="row">
+                <div class="d-none js-line-lengthes">
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="d-none">
+                        <label>Test examples</label>
+                        <select asp-for="TestExample" class="form-control" asp-items="@Html.GetEnumSelectList<TestExample>()"></select>
+                    </div>
+                    <button type="submit" id="btnsubmit" class="btn btn-outline-primary mt-3">Calculate</button>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <button type='button' class='btn btn-outline-primary mt-3' data-toggle='modal' data-target='#saveData'>Save data</button>
+
+                    }
+                </div>
+                <div class="col-12 col-md-8">
+
+                    <div>
+                        <div class="form-group row d-none">
+                            <label asp-for="PiverParams.LengthByX" class="col-sm-5 col-form-label ">Length by X</label>
+                            <div class="col-sm-7">
+                                <input type="text" asp-for="PiverParams.LengthByX" class="form-control js-length-by-x">
+                            </div>
+                            <label asp-for="RiverId" class="col-sm-5 col-form-label ">Length by X</label>
+                            <div class="col-sm-7">
+                                <input type="text" asp-for="RiverId" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="PiverParams.SplitsNumberByX" class="col-sm-5 col-form-label">Number of partitions by X</label>
+                            <div class="col-sm-7">
+                                <input type="text" asp-for="PiverParams.SplitsNumberByX" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="PiverParams.LengthByT" class="col-sm-5 col-form-label">Length by T</label>
+                            <div class="col-sm-7">
+                                <input type="text" asp-for="PiverParams.LengthByT" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="PiverParams.SplitsNumberByT" class="col-sm-5 col-form-label">Number of partitions by T</label>
+                            <div class="col-sm-7">
+                                <input type="text" asp-for="PiverParams.SplitsNumberByT" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="PiverParams.OutputMultiplicityByX" class="col-sm-5 col-form-label">Multiplicity of output by X</label>
+                            <div class="col-sm-7">
+                                <input type="text" asp-for="PiverParams.OutputMultiplicityByX" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="PiverParams.OutputMultiplicityByT" class="col-sm-5 col-form-label"> Multiplicity of output by T</label>
+                            <div class="col-sm-7">
+                                <input type="text" asp-for="PiverParams.OutputMultiplicityByT" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="pl-3">
+                            <h6>Task Params</h6>
+                            <div class="form-group row d-none">
+                                <label asp-for="TaskParams.GravityAcceleration" class="col-sm-5 col-form-label">G</label>
+                                <div class="col-sm-7">
+                                    <input type="text" asp-for="TaskParams.GravityAcceleration" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="TaskParams.FreeSurfaceWidth" class="col-sm-5 col-form-label">Free Surface Width</label>
+                                <div class="col-sm-7">
+                                    <input type="text" asp-for="TaskParams.FreeSurfaceWidth" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="TaskParams.ChannelHydraulicRadius" class="col-sm-5 col-form-label">Channel Hydraulic Radius</label>
+                                <div class="col-sm-7">
+                                    <input type="text" asp-for="TaskParams.ChannelHydraulicRadius" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="TaskParams.ShaziCoefficient" class="col-sm-5 col-form-label">Shazi Coefficient</label>
+                                <div class="col-sm-7">
+                                    <input type="text" asp-for="TaskParams.ShaziCoefficient" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="TaskParams.AngleOfInclinationSine" class="col-sm-5 col-form-label">Angle Of Inclination Sine</label>
+                                <div class="col-sm-7">
+                                    <input type="text" asp-for="TaskParams.AngleOfInclinationSine" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row d-none">
+                                <label asp-for="TaskParams.AngleSine" class="col-sm-5 col-form-label">Angle Sine</label>
+                                <div class="col-sm-7">
+                                    <input type="text" asp-for="TaskParams.AngleSine" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row d-none">
+                                <label asp-for="TaskParams.Alpha" class="col-sm-5 col-form-label">Alpha</label>
+                                <div class="col-sm-7">
+                                    <input type="text" asp-for="TaskParams.Alpha" class="form-control">
+                                </div>
+                            </div>
+                            <div class="js-points-count d-none" data-count="@Model.MapPoints.Count"></div>
+                            <div class="js-points d-none">
+                                @for (int i = 0; i < Model.MapPoints.Count; i++)
+                                {
+                                    <input type="text" asp-for="MapPoints[i].PointX" class="form-control">
+                                    <input type="text" asp-for="MapPoints[i].PointY" class="form-control">
+                                    <input type="text" asp-for="MapPoints[i].SequenceNumber" class="form-control">
+                                }
+                            </div>
+                            <div class="modal fade" id="saveData" tabindex="-1" role="dialog" aria-labelledby="saveData" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel2">Save Data</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label asp-for="RiverName" class="col-sm-5 col-form-label">Name of River</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" asp-for="RiverName" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            @if (SignInManager.IsSignedIn(User))
+                                            {
+                                                <button type="button" id="saveDataRiver" class="btn btn-primary">Save</button>
+                                            }
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-12 col-md-8">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div id="detailsWindow" class="floatingWindow position-relative " style="z-index:998;width:250px;">
+                        <div class="shadow">
+                            <div class="title">
+                                Enter a zip code to zoom to the desired location - then click two or more
+                                input points on the map to calculate the distance.
+                            </div>
+                            <div class="details">
+                                <div dojoType="dijit.form.Button" class="btn btn-success text-white btn-sm" id="resetButton" onClick="resetMap();">
+                                    Clear Route
+                                </div>
+                                <br />
+                                <div id="distanceDetails" style="padding:5px;overflow:auto;max-height:300px;display:none;">
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="soria ">
+                        <div id="mainWindow"
+                             data-dojo-type="dijit.layout.BorderContainer"
+                             data-dojo-props="design:'sidebar', gutters:false"
+                             style="width: 100%; height: 100%; margin: 0;">
+
+                            <div id="centerPane"
+                                 data-dojo-type="dijit.layout.BorderContainer"
+                                 data-dojo-props="region:'center', gutters:false"
+                                 style="margin:2px 2px 2px 2px;">
+
+                                <div id="map"
+                                     data-dojo-type="dijit.layout.ContentPane"
+                                     data-dojo-props="region:'center'"
+                                     style="position:relative; overflow:hidden;">
+
+
+                                    <div style="position:absolute; top:5px; right:30px; z-index:999; color:black;">
+                                        <div data-dojo-type="dijit.form.Button" id="imagery" class="togglebutton btn btn-success text-white" onClick="toggleBaseLayer('imagery');">
+                                            Imagery
+                                        </div>
+                                        <div data-dojo-type="dijit.form.Button" id="topo" class="togglebutton btn btn-success text-white" onClick="toggleBaseLayer('topo');">
+                                            Topo
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-matrixes">
+                <div class='w-100 btn-matrixes d-none'>
+                    <button type="button" class="btn btn-outline-primary mt-3 mr-2" data-toggle="modal" data-target="#show-matrix-h">
+                        show matrix H
+                    </button><button type="button" class="btn btn-outline-primary mt-3 mr-2" data-toggle="modal" data-target="#show-matrix-u">
+                        show matrix U
+                    </button>
+                </div>
+                <div class="w-100">
+                    <div id="test0chartdivaria" style="height: 500px;"></div>
+                </div>
+                <div class="w-100">
+                    <div id="test0chartdivspeed" style="height: 500px;"></div>
+                </div>
+                <div class="w-100">
+                    <div id="chartdivaria" style="height: 500px;"></div>
+                </div>
+                <div class="w-100">
+                    <div id="chartdivspeed" style="height: 500px;"></div>
+                </div>
+                <div class="modal fade" id="show-matrix-h" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Matrix H</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-matrix-h">
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="show-matrix-u" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel2">Matrix U</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-matrix-u">
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="result-matrix-modals">
+
+            </div>
+            <div class="charts-modals">
+
+            </div>
+
+
+        </div>
+    </div>
+</form>
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+    varying vec4 vColor;
+    void main(void) {
+    gl_FragColor = vColor;
+    }
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec4 aVertexColor;
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+    varying vec4 vColor;
+    void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vColor = aVertexColor;
+    }
+</script>
+
+<!-- Resources -->
+<!-- Chart code -->
+<script>
+
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>

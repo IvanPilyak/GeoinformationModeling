@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoinformationModeling", "GeoinformationModeling\GeoinformationModeling.csproj", "{C919B0D6-9FB2-4D8E-B024-7397898819BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoinformationModeling.Web", "GeoinfotmationModeling.Web\GeoinformationModeling.Web.csproj", "{C1875F49-555F-4EB9-AB78-64F7CF3A3231}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoinformationModeling.DataAccess", "GeoinformationModeling.DataAccess\GeoinformationModeling.DataAccess.csproj", "{A839BA6B-EE25-40FB-801D-2A1D6B6B9ABF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoinformationModeling.BusinessLogic", "GeoinformationModeling.BusinessLogic\GeoinformationModeling.BusinessLogic.csproj", "{674D269C-BA14-4E0E-8ED1-7240CEADC3FE}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GeoinformationModeling.DataBase", "GeoinformationModeling.DataBase\GeoinformationModeling.DataBase.sqlproj", "{FC0AD386-391D-48DE-8FAD-8B85E10230A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C919B0D6-9FB2-4D8E-B024-7397898819BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C919B0D6-9FB2-4D8E-B024-7397898819BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C919B0D6-9FB2-4D8E-B024-7397898819BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C919B0D6-9FB2-4D8E-B024-7397898819BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1875F49-555F-4EB9-AB78-64F7CF3A3231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1875F49-555F-4EB9-AB78-64F7CF3A3231}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1875F49-555F-4EB9-AB78-64F7CF3A3231}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1875F49-555F-4EB9-AB78-64F7CF3A3231}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A839BA6B-EE25-40FB-801D-2A1D6B6B9ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A839BA6B-EE25-40FB-801D-2A1D6B6B9ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A839BA6B-EE25-40FB-801D-2A1D6B6B9ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A839BA6B-EE25-40FB-801D-2A1D6B6B9ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{674D269C-BA14-4E0E-8ED1-7240CEADC3FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{674D269C-BA14-4E0E-8ED1-7240CEADC3FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{674D269C-BA14-4E0E-8ED1-7240CEADC3FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{674D269C-BA14-4E0E-8ED1-7240CEADC3FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC0AD386-391D-48DE-8FAD-8B85E10230A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC0AD386-391D-48DE-8FAD-8B85E10230A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC0AD386-391D-48DE-8FAD-8B85E10230A5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FC0AD386-391D-48DE-8FAD-8B85E10230A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC0AD386-391D-48DE-8FAD-8B85E10230A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC0AD386-391D-48DE-8FAD-8B85E10230A5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B511A595-E343-426E-9B0C-241CB99C3DA3}
+	EndGlobalSection
+EndGlobal
