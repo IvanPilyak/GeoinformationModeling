@@ -824,25 +824,24 @@ function setPoints(mapPoint) {
             if (isNaN(distance)) {
                 distance = 0;
             }
-            legDistance.push(dojo.number.format(distance, {
-                places: 2
-            }));
+            legDistance.push(distance);
             totalDistance += distance;
             var content = "";
             $('.js-line-lengthes').html("");
-            dojo.forEach(legDistance, function (leg, index) {
+            for (var index = 0; index < legDistance.length; index++) {
+                var leg = dojo.number.format(legDistance[index], {
+                    places: 2
+                }); 
                 content = content + "<div class='mb-2' id='leg" + index + "'><b>Leg " + (index + 1) + "</b>" + ": " + leg
                     + "<button type='button' class='btn btn-success text-white btn-sm d-none ml-2' data-toggle='modal' data-target='#modalleg" + index + "'>show details</button></div>";
 
-                    $('.js-line-lengthes').append('<input type="text" class="form-control" ata-val="true" data-val-number="The field must be a number." data-val-required="The Double field is required."  id="Lengthes_' + index + '_" name="Lengthes[' + index + ']" value="' + leg + '">')
-                pieceLengths += leg + ";";
-            });
+                $('.js-line-lengthes').append('<input type="text" class="form-control" ata-val="true" data-val-number="The field must be a number." data-val-required="The Double field is required."  id="Lengthes_' + index + '_" name="Lengthes[' + index + ']" value="' + legDistance[index] + '">')
+                pieceLengths += legDistance[index] + ";";
+            }
             content = content + "<b>Total:</b> " + dojo.number.format(totalDistance, {
                 places: 2
             }) + " m <br />";
-            $(".js-length-by-x").val(dojo.number.format(totalDistance, {
-                places: 2
-            }));
+            $(".js-length-by-x").val(totalDistance);
             dojo.byId('distanceDetails').innerHTML = content;
         });
     }
