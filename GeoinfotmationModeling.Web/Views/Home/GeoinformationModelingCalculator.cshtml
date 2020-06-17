@@ -19,6 +19,12 @@
         <div class="col-12 col-md-4">
             <div class="row">
                 <div class="d-none js-line-lengthes">
+                    @*@for (int i = 0; i < Model.MapPoints.Count; i++)
+                    {
+                        <input type="text" asp-for="Lengthes[i]" class="form-control">
+                        <input type="text" asp-for="Lengthes[i]" class="form-control">
+                        <input type="text" asp-for="Lengthes[i]" class="form-control">
+                    }*@
                 </div>
 
                 <div class="col-12 col-md-4">
@@ -34,7 +40,8 @@
                     }
                 </div>
                 <div class="col-12 col-md-8">
-
+                    @*<input type="text" class="form-control" data-val="true" data-val-number="The field must be a number." 
+                           data-val-required="The Double field is required." id="Lengthes_0_" name="Lengthes[0]" value="2">*@
                     <div>
                         <div class="form-group row d-none">
                             <label asp-for="PiverParams.LengthByX" class="col-sm-5 col-form-label ">Length by X</label>
@@ -91,13 +98,13 @@
                                     <input type="text" asp-for="TaskParams.FreeSurfaceWidth" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label asp-for="TaskParams.ChannelHydraulicRadius" class="col-sm-5 col-form-label">Channel Hydraulic Radius</label>
+                            <div class="form-group row d-none">
+                                <label asp-for="TaskParams.ChannelHydraulicRadius" class="col-sm-5 col-form-label ">Channel Hydraulic Radius</label>
                                 <div class="col-sm-7">
                                     <input type="text" asp-for="TaskParams.ChannelHydraulicRadius" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row d-none">
                                 <label asp-for="TaskParams.ShaziCoefficient" class="col-sm-5 col-form-label">Shazi Coefficient</label>
                                 <div class="col-sm-7">
                                     <input type="text" asp-for="TaskParams.ShaziCoefficient" class="form-control">
@@ -189,7 +196,7 @@
                         <div id="mainWindow"
                              data-dojo-type="dijit.layout.BorderContainer"
                              data-dojo-props="design:'sidebar', gutters:false"
-                             style="width: 100%; height: 100%; margin: 0;">
+                             style="width: 100%; height: 700px; margin: 0;">
 
                             <div id="centerPane"
                                  data-dojo-type="dijit.layout.BorderContainer"
@@ -199,7 +206,7 @@
                                 <div id="map"
                                      data-dojo-type="dijit.layout.ContentPane"
                                      data-dojo-props="region:'center'"
-                                     style="position:relative; overflow:hidden;">
+                                     style="position:relative; overflow:hidden; height: 700px;">
 
 
                                     <div style="position:absolute; top:5px; right:30px; z-index:999; color:black;">
@@ -224,11 +231,10 @@
                         show matrix U
                     </button>
                 </div>
-                <div class="w-100">
-                    <div id="test0chartdivaria" style="height: 500px;"></div>
+                <div class="js-buttons-open-charts">
+
                 </div>
-                <div class="w-100">
-                    <div id="test0chartdivspeed" style="height: 500px;"></div>
+                <div class="w-100 js-time-charts">
                 </div>
                 <div class="w-100">
                     <div id="chartdivaria" style="height: 500px;"></div>
@@ -314,9 +320,6 @@
 
 <!-- Resources -->
 <!-- Chart code -->
-<script>
-
-</script>
 
 <!-- HTML -->
 <div id="chartdiv"></div>

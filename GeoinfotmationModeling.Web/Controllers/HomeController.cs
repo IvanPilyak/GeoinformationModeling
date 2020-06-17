@@ -72,8 +72,9 @@ namespace GeoinformationModeling.Web.Controllers
                         AngleSine = 0.1,
                         Alpha = 1
                     },
-                    MapPoints = new List<MapPointModel>()
-                });
+                    MapPoints = new List<MapPointModel>(),
+                    Lengthes = new List<double> { 2 }
+                }) ;
             }
             else
             {

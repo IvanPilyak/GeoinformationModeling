@@ -37,6 +37,9 @@ $(document).ready(function () {
             },
         });
     });
+
+
+  
 });
 
 function GetHtmlTableFoeMatrix(matrix) {
@@ -56,6 +59,7 @@ function GetHtmlTableFoeMatrix(matrix) {
     return res;
 }
 
+
 function resultMatrixes(data, status, xhr) {
     var matrixH = data.result.matrixH;
     var matrixU = data.result.matrixU;
@@ -65,8 +69,220 @@ function resultMatrixes(data, status, xhr) {
 
     $(".btn-matrixes").removeClass("d-none");
     $(".charts-modals").html("");
-    for (var i = 0; i < data.result.mapDetails.length; i++) {
+    $(".js-buttons-open-charts").html("");
+    $('.js-time-charts').html("");
+    var isFirst = true;
+    var resultData = data.result.mapDetails;
+    for (var i = 0; i < resultData.length; i++) {
+
+
+
+
+
+
         $('#leg' + i + ' .btn').removeClass('d-none');
+        if (isFirst) {
+            for (var m = 0; m < resultData[0].matrixH.length; m++) {
+                $(".js-buttons-open-charts").append("<button type='button' value='" + m + "' class=' time-btn btn btn-primary mt-2 mr-2'  id='" + "time-" + m + "'> " + "t " + m + "</button>");
+                $('.js-time-charts').append('<div id="test' + m + 'chartdivaria" class="js-test-charts d-none" style="height: 500px;"></div>');
+                $('.js-time-charts').append('<div id="test' + m + 'chartdivspeed" class="js-test-charts d-none" style="height: 500px;"></div>');
+
+                am4core.ready(function () {
+
+                    // Themes begin
+                    am4core.useTheme(am4themes_animated);
+                    // Themes end
+
+
+
+
+                    // Create chart instance
+                    var chart = am4core.create("test" + m + "chartdivaria", am4charts.XYChart);
+                    // Create axes
+                    var dateAxis = chart.xAxes.push(new am4charts.ValueAxis());
+                    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                    var details = data.result.mapDetails;
+                    var countH = details.length;
+
+                    for (var j = 0; j < countH; j++) {
+                        createSeries("value" + j, "Leg " + j, j);
+                    }
+
+                    // Create series
+                    function createSeries(s, name, index) {
+                        var series = chart.series.push(new am4charts.LineSeries());
+                        series.dataFields.valueY = "value" + s;
+                        series.dataFields.valueX = "valueX";
+                        series.name = name;
+
+                        var segment = series.segments.template;
+                        segment.interactionsEnabled = true;
+
+                        var hoverState = segment.states.create("hover");
+                        hoverState.properties.strokeWidth = 3;
+
+                        var dimmed = segment.states.create("dimmed");
+                        dimmed.properties.stroke = am4core.color("#dadada");
+
+                        segment.events.on("over", function (event) {
+                            processOver(event.target.parent.parent.parent);
+                        });
+
+                        segment.events.on("out", function (event) {
+                            processOut(event.target.parent.parent.parent);
+                        });
+
+                        var data = [];
+                        var value = 0;
+                        for (var j = 1; j < details[index].matrixH[m].length; j++) {
+                            value = details[index].matrixH[m][j];
+                            var dataItem = { valueX: j };
+                            dataItem["value" + s] = value;
+                            data.push(dataItem);
+                        }
+
+                        series.data = data;
+                        return series;
+                    }
+
+                    chart.legend = new am4charts.Legend();
+                    chart.legend.position = "right";
+                    chart.legend.scrollable = true;
+                    chart.legend.itemContainers.template.events.on("over", function (event) {
+                        processOver(event.target.dataItem.dataContext);
+                    })
+
+                    chart.legend.itemContainers.template.events.on("out", function (event) {
+                        processOut(event.target.dataItem.dataContext);
+                    })
+
+                    function processOver(hoveredSeries) {
+                        hoveredSeries.toFront();
+
+                        hoveredSeries.segments.each(function (segment) {
+                            segment.setState("hover");
+                        })
+
+                        chart.series.each(function (series) {
+                            if (series != hoveredSeries) {
+                                series.segments.each(function (segment) {
+                                    segment.setState("dimmed");
+                                })
+                                series.bulletsContainer.setState("dimmed");
+                            }
+                        });
+                    }
+
+                    function processOut(hoveredSeries) {
+                        chart.series.each(function (series) {
+                            series.segments.each(function (segment) {
+                                segment.setState("default");
+                            })
+                            series.bulletsContainer.setState("default");
+                        });
+                    }
+
+                }); // end am4core.ready()
+
+                am4core.ready(function () {
+
+                    // Themes begin
+                    am4core.useTheme(am4themes_animated);
+                    // Themes end
+
+
+
+
+                    // Create chart instance
+                    var chart = am4core.create('test' + m + 'chartdivspeed', am4charts.XYChart);
+                    // Create axes
+                    var dateAxis = chart.xAxes.push(new am4charts.ValueAxis());
+                    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+                    var details = data.result.mapDetails;
+                    var countU = details.length;
+                    for (var j = 0; j < countU; j++) {
+                        createSeries("value" + j, "Leg " + j, j);
+                    }
+
+                    // Create series
+                    function createSeries(s, name, index) {
+                        var series = chart.series.push(new am4charts.LineSeries());
+                        series.dataFields.valueY = "value" + s;
+                        series.dataFields.valueX = "valueX";
+                        series.name = name;
+
+                        var segment = series.segments.template;
+                        segment.interactionsEnabled = true;
+
+                        var hoverState = segment.states.create("hover");
+                        hoverState.properties.strokeWidth = 3;
+
+                        var dimmed = segment.states.create("dimmed");
+                        dimmed.properties.stroke = am4core.color("#dadada");
+
+                        segment.events.on("over", function (event) {
+                            processOver(event.target.parent.parent.parent);
+                        });
+
+                        segment.events.on("out", function (event) {
+                            processOut(event.target.parent.parent.parent);
+                        });
+
+                        var data = [];
+                        var value = 0;
+                        for (var j = 1; j < details[index].matrixU[m].length; j++) {
+                            value = details[index].matrixU[m][j];
+                            var dataItem = { valueX: j };
+                            dataItem["value" + s] = value;
+                            data.push(dataItem);
+                        }
+
+                        series.data = data;
+                        return series;
+                    }
+
+                    chart.legend = new am4charts.Legend();
+                    chart.legend.position = "right";
+                    chart.legend.scrollable = true;
+                    chart.legend.itemContainers.template.events.on("over", function (event) {
+                        processOver(event.target.dataItem.dataContext);
+                    })
+
+                    chart.legend.itemContainers.template.events.on("out", function (event) {
+                        processOut(event.target.dataItem.dataContext);
+                    })
+
+                    function processOver(hoveredSeries) {
+                        hoveredSeries.toFront();
+
+                        hoveredSeries.segments.each(function (segment) {
+                            segment.setState("hover");
+                        })
+
+                        chart.series.each(function (series) {
+                            if (series != hoveredSeries) {
+                                series.segments.each(function (segment) {
+                                    segment.setState("dimmed");
+                                })
+                                series.bulletsContainer.setState("dimmed");
+                            }
+                        });
+                    }
+
+                    function processOut(hoveredSeries) {
+                        chart.series.each(function (series) {
+                            series.segments.each(function (segment) {
+                                segment.setState("default");
+                            })
+                            series.bulletsContainer.setState("default");
+                        });
+                    }
+
+                }); // end am4core.ready()
+            }
+            isFirst = false;
+        }
 
         $(".charts-modals").append("<div class='modal' id='modalleg" + i + "' tabindex=' - 1' role='dialog' aria-labelledby='modalleg" + i + "' aria-hidden='true'>" +
             "<div class='modal-dialog modal-lg' role='document'>" +
@@ -76,7 +292,6 @@ function resultMatrixes(data, status, xhr) {
             '<span aria-hidden="true">&times;</span>' +
             '</button> </div ><div class="modal-body">' + '<div id="chartarialeg' + i + '" style="height: 500px;"></div>' + '<div id="chartspeedleg' + i + '" style="height: 500px;"></div>' +
             ' </div><div class= "modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div></div> ');
-
 
         am4core.ready(function () {
 
@@ -96,7 +311,7 @@ function resultMatrixes(data, status, xhr) {
             var countH = pieceMatrixH.length;
 
             for (var j = 0; j < countH; j++) {
-                createSeries("value" + j, "Series #" + j, j);
+                createSeries("value" + j, "t = " + j, j);
             }
 
             // Create series
@@ -193,7 +408,7 @@ function resultMatrixes(data, status, xhr) {
             var pieceMatrixU = data.result.mapDetails[i].matrixU;
             var countU = pieceMatrixU.length;
             for (var j = 0; j < countU; j++) {
-                createSeries("value" + j, "Series #" + j, j);
+                createSeries("value" + j, "t =" + j, j);
             }
 
             // Create series
@@ -272,202 +487,21 @@ function resultMatrixes(data, status, xhr) {
 
         }); // end am4core.ready()
 
+
+        $(".time-btn").click(function (e) {
+            $('.js-test-charts').addClass('d-none');
+            $('.time-btn').removeClass('btn-secondary');
+            $(this).addClass('btn-secondary');
+            var i = $(this).val();
+            $('#test' + i + 'chartdivaria').removeClass('d-none');
+            $('#test' + i + 'chartdivspeed').removeClass('d-none');
+        });
+
     }
 
-    am4core.ready(function () {
+    
 
-        // Themes begin
-        am4core.useTheme(am4themes_animated);
-        // Themes end
-
-
-
-
-        // Create chart instance
-        var chart = am4core.create("test0chartdivaria", am4charts.XYChart);
-        // Create axes
-        var dateAxis = chart.xAxes.push(new am4charts.ValueAxis());
-        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        var details = data.result.mapDetails;
-        var countH = details.length;
-
-        for (var j = 0; j < countH; j++) {
-            createSeries("value" + j, "Series #" + j, j);
-        }
-
-        // Create series
-        function createSeries(s, name, index) {
-            var series = chart.series.push(new am4charts.LineSeries());
-            series.dataFields.valueY = "value" + s;
-            series.dataFields.valueX = "valueX";
-            series.name = name;
-
-            var segment = series.segments.template;
-            segment.interactionsEnabled = true;
-
-            var hoverState = segment.states.create("hover");
-            hoverState.properties.strokeWidth = 3;
-
-            var dimmed = segment.states.create("dimmed");
-            dimmed.properties.stroke = am4core.color("#dadada");
-
-            segment.events.on("over", function (event) {
-                processOver(event.target.parent.parent.parent);
-            });
-
-            segment.events.on("out", function (event) {
-                processOut(event.target.parent.parent.parent);
-            });
-
-            var data = [];
-            var value = 0;
-            for (var j = 1; j < details[index].matrixH[1].length; j++) {
-                value = details[index].matrixH[1][j];
-                var dataItem = { valueX: j };
-                dataItem["value" + s] = value;
-                data.push(dataItem);
-            }
-
-            series.data = data;
-            return series;
-        }
-
-        chart.legend = new am4charts.Legend();
-        chart.legend.position = "right";
-        chart.legend.scrollable = true;
-        chart.legend.itemContainers.template.events.on("over", function (event) {
-            processOver(event.target.dataItem.dataContext);
-        })
-
-        chart.legend.itemContainers.template.events.on("out", function (event) {
-            processOut(event.target.dataItem.dataContext);
-        })
-
-        function processOver(hoveredSeries) {
-            hoveredSeries.toFront();
-
-            hoveredSeries.segments.each(function (segment) {
-                segment.setState("hover");
-            })
-
-            chart.series.each(function (series) {
-                if (series != hoveredSeries) {
-                    series.segments.each(function (segment) {
-                        segment.setState("dimmed");
-                    })
-                    series.bulletsContainer.setState("dimmed");
-                }
-            });
-        }
-
-        function processOut(hoveredSeries) {
-            chart.series.each(function (series) {
-                series.segments.each(function (segment) {
-                    segment.setState("default");
-                })
-                series.bulletsContainer.setState("default");
-            });
-        }
-
-    }); // end am4core.ready()
-
-    am4core.ready(function () {
-
-        // Themes begin
-        am4core.useTheme(am4themes_animated);
-        // Themes end
-
-
-
-
-        // Create chart instance
-        var chart = am4core.create("test0chartdivspeed", am4charts.XYChart);
-        // Create axes
-        var dateAxis = chart.xAxes.push(new am4charts.ValueAxis());
-        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-        var details = data.result.mapDetails;
-        var countU = details.length;
-        for (var j = 0; j < countU; j++) {
-            createSeries("value" + j, "Series #" + j, j);
-        }
-
-        // Create series
-        function createSeries(s, name, index) {
-            var series = chart.series.push(new am4charts.LineSeries());
-            series.dataFields.valueY = "value" + s;
-            series.dataFields.valueX = "valueX";
-            series.name = name;
-
-            var segment = series.segments.template;
-            segment.interactionsEnabled = true;
-
-            var hoverState = segment.states.create("hover");
-            hoverState.properties.strokeWidth = 3;
-
-            var dimmed = segment.states.create("dimmed");
-            dimmed.properties.stroke = am4core.color("#dadada");
-
-            segment.events.on("over", function (event) {
-                processOver(event.target.parent.parent.parent);
-            });
-
-            segment.events.on("out", function (event) {
-                processOut(event.target.parent.parent.parent);
-            });
-
-            var data = [];
-            var value = 0;
-            for (var j = 1; j < details[index].matrixU[1].length; j++) {
-                value = details[index].matrixU[1][j];
-                var dataItem = { valueX: j };
-                dataItem["value" + s] = value;
-                data.push(dataItem);
-            }
-
-            series.data = data;
-            return series;
-        }
-
-        chart.legend = new am4charts.Legend();
-        chart.legend.position = "right";
-        chart.legend.scrollable = true;
-        chart.legend.itemContainers.template.events.on("over", function (event) {
-            processOver(event.target.dataItem.dataContext);
-        })
-
-        chart.legend.itemContainers.template.events.on("out", function (event) {
-            processOut(event.target.dataItem.dataContext);
-        })
-
-        function processOver(hoveredSeries) {
-            hoveredSeries.toFront();
-
-            hoveredSeries.segments.each(function (segment) {
-                segment.setState("hover");
-            })
-
-            chart.series.each(function (series) {
-                if (series != hoveredSeries) {
-                    series.segments.each(function (segment) {
-                        segment.setState("dimmed");
-                    })
-                    series.bulletsContainer.setState("dimmed");
-                }
-            });
-        }
-
-        function processOut(hoveredSeries) {
-            chart.series.each(function (series) {
-                series.segments.each(function (segment) {
-                    segment.setState("default");
-                })
-                series.bulletsContainer.setState("default");
-            });
-        }
-
-    }); // end am4core.ready()
-
+   
 
 
     //NORP
@@ -489,7 +523,7 @@ function resultMatrixes(data, status, xhr) {
 
 
         for (var i = 0; i < matrixH.length; i++) {
-            createSeries("value" + i, "Series #" + i, i);
+            createSeries("value" + i, "t = " + i, i);
         }
 
         // Create series
@@ -585,7 +619,7 @@ function resultMatrixes(data, status, xhr) {
 
 
         for (var i = 0; i < matrixU.length; i++) {
-            createSeries("value" + i, "Series #" + i, i);
+            createSeries("value" + i, "t = " + i, i);
         }
 
         // Create series
@@ -800,8 +834,7 @@ function setPoints(mapPoint) {
                 content = content + "<div class='mb-2' id='leg" + index + "'><b>Leg " + (index + 1) + "</b>" + ": " + leg
                     + "<button type='button' class='btn btn-success text-white btn-sm d-none ml-2' data-toggle='modal' data-target='#modalleg" + index + "'>show details</button></div>";
 
-
-                $('.js-line-lengthes').append('<input type="text" class="form-control" id="Lengthes_' + index + '_" name="Lengthes[' + index + ']" value="' + leg + '">')
+                    $('.js-line-lengthes').append('<input type="text" class="form-control" ata-val="true" data-val-number="The field must be a number." data-val-required="The Double field is required."  id="Lengthes_' + index + '_" name="Lengthes[' + index + ']" value="' + leg + '">')
                 pieceLengths += leg + ";";
             });
             content = content + "<b>Total:</b> " + dojo.number.format(totalDistance, {
